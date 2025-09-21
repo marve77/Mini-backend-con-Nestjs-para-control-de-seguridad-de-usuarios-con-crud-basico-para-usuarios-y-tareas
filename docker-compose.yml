@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tasks_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: tasks_db
+      MYSQL_USER: nestjs
+      MYSQL_PASSWORD: nestjs123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - tasks_network
+
+volumes:
+  mysql_data:
+
+networks:
+  tasks_network:
+    driver: bridge
